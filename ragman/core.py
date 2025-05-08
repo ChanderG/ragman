@@ -7,6 +7,7 @@ def index_page(collection, page):
 
     with tempfile.NamedTemporaryFile(mode="w+") as fp:
         fname = fp.name
+        # lifted from: https://superscript.com/blog/man-page-in-plain-text/
         command = f"man -P cat {page} | col -b > {fname}"
 
         subprocess.run(command, shell=True)
