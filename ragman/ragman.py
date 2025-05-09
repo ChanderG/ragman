@@ -37,9 +37,10 @@ def search(page, query):
         print("\n" + 10*"====")
 
 @cli.command()
+@click.option("-m", "--model", help="name of model", default="ibm-granite/granite-3.1-8b-instruct")
 @click.argument("page")
 @click.argument("query")
-def chat(page, query):
+def chat(model, page, query):
     col = get_collection(page)
     res = col.query(query_texts=[query], n_results = 3)
 
@@ -52,7 +53,7 @@ def chat(page, query):
     client = OpenAI()
 
     completion = client.chat.completions.create(
-        model="ibm-granite/granite-3.1-8b-instruct",
+        model=model,
         messages=[{"role": "user", "content": msg}])
 
     print(completion.choices[0].message.content)
